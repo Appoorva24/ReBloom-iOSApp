@@ -1,6 +1,5 @@
 #  ReBloom 🌸
 
-<p align="center">
 A gentle space for healing, connection, and recovery after childbirth.
 </p>
 
@@ -15,6 +14,12 @@ After childbirth, much of the attention shifts to the baby, while the mother —
 This gap in care can make healing difficult, both physically and mentally.
 
 ReBloom was created to support mothers during this phase and ensure they feel cared for, understood, and never alone.
+
+---
+
+## Demo
+
+https://youtu.be/rzZhST656SU
 
 ---
 
@@ -74,12 +79,6 @@ Provides educational resources to help the partner better understand postpartum 
 
 To ensure that mothers feel supported throughout recovery,
 and partners feel empowered to actively contribute to the healing journey.
-
----
-
-## Demo
-
-https://youtu.be/rzZhST656SU
 
 ---
 

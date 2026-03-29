@@ -1,0 +1,198 @@
+import SwiftUI
+import SwiftData
+import AVFoundation
+
+struct MotherMissionsView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var profiles: [UserProfile]
+
+    @State private var customMission   = ""
+    @State private var missionRecorder = VoiceRecorderManager()
+    @State private var showToast       = false
+    @State private var toastMessage    = ""
+
+    private var profile: UserProfile? { profiles.first }
+    private var partnerName: String { profile?.partnerName ?? "Partner" }
+    private var currentWeek: Int { Calendar.current.component(.weekOfYear, from: Date()) }
+
+    private let missionChips: [(emoji: String, label: String)] = [
+        ("🍼", "Take the baby"),
+        ("🍽️", "Cook dinner"),
+        ("🤗", "I need a hug"),
+        ("💆", "Give me 20 mins"),
+        ("🛒", "Go grocery run"),
+        ("💤", "Let me sleep in")
+    ]
+
+    var body: some View {
+        ZStack {
+            LinearGradient(
+                colors: [.motherBgTop, .motherBgBottom],
+                startPoint: .top, endPoint: .bottom
+            ).ignoresSafeArea()
+
+            FloatingOrb(color: .motherSecondary, size: 180).position(x: 60,  y: 140)
+            FloatingOrb(color: .motherLavender,  size: 150).position(x: 320, y: 380)
+
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 28) {
+
+                    // Quick Missions
+                    VStack(alignment: .leading, spacing: 14) {
+                        Text("Quick Missions")
+                            .font(.title3.weight(.bold))
+                            .fontDesign(.rounded)
+                            .foregroundStyle(Color.motherTextHeading)
+
+                        LazyVGrid(
+                            columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)],
+                            spacing: 12
+                        ) {
+                            ForEach(missionChips, id: \.label) { chip in
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                    sendMission(title: chip.label)
+                                } label: {
+                                    HStack(spacing: 12) {
+                                        Text(chip.emoji)
+                                            .font(.title3)
+                                            .frame(width: 42, height: 42)
+                                            .background(Color.motherRose.opacity(0.10))
+                                            .clipShape(Circle())
+                                        Text(chip.label)
+                                            .font(.subheadline.weight(.semibold))
+                                            .fontDesign(.rounded)
+                                            .foregroundStyle(Color.motherTextHeading)
+                                            .multilineTextAlignment(.leading)
+                                            .lineLimit(2)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                    .padding(.horizontal, 14)
+                                    .padding(.vertical, 14)
+                                    .background(Color.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                                    .shadow(color: Color.motherPrimary.opacity(0.08), radius: 6, x: 0, y: 3)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                            .stroke(Color.motherRose.opacity(0.15), lineWidth: 1)
+                                    )
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                    }
+
+                    // Custom Mission
+                    VStack(alignment: .leading, spacing: 14) {
+                        Text("Custom Mission")
+                            .font(.title3.weight(.bold))
+                            .fontDesign(.rounded)
+                            .foregroundStyle(Color.motherTextHeading)
+
+                        VStack(spacing: 12) {
+                            TextField("e.g. Run me a bath tonight…", text: $customMission, axis: .vertical)
+                                .lineLimit(3...5)
+                                .font(.body)
+                                .fontDesign(.rounded)
+                                .padding(14)
+                                .background(Color.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                        .stroke(
+                                            customMission.isEmpty
+                                                ? Color.motherRose.opacity(0.15)
+                                                : Color.motherRose.opacity(0.45),
+                                            lineWidth: 1.5
+                                        )
+                                )
+                                .shadow(color: Color.motherPrimary.opacity(0.06), radius: 4, x: 0, y: 2)
+
+                            Button {
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                sendMission(title: customMission)
+                                customMission = ""
+                            } label: {
+                                Text("Send Mission")
+                                    .font(.subheadline.weight(.bold))
+                                    .fontDesign(.rounded)
+                                    .foregroundStyle(.white)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 14)
+                                    .background(
+                                        customMission.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                                            ? AnyShapeStyle(Color.motherRose.opacity(0.35))
+                                            : AnyShapeStyle(LinearGradient(
+                                                colors: [.motherRose, .motherDeepRose],
+                                                startPoint: .leading, endPoint: .trailing
+                                            ))
+                                    )
+                                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                            }
+                            .buttonStyle(.plain)
+                            .disabled(customMission.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+
+                            HStack(spacing: 10) {
+                                Rectangle().fill(Color.secondary.opacity(0.15)).frame(height: 1)
+                                Text("or send a voice note")
+                                    .font(.caption)
+                                    .fontDesign(.rounded)
+                                    .foregroundStyle(.secondary)
+                                    .fixedSize()
+                                Rectangle().fill(Color.secondary.opacity(0.15)).frame(height: 1)
+                            }
+
+                            VoiceMessageView(recorder: missionRecorder, tintColor: Color.motherRose, onSaveVoice: nil, onSendVoice: { data in
+                                let encoded = "[VOICE:\(data.base64EncodedString())]"
+                                let mission = PartnerMission(
+                                    missionTitle: "🎙️ Voice Mission",
+                                    missionDescription: encoded,
+                                    isCompleted: false,
+                                    weekNumber: currentWeek,
+                                    isNewForPartner: true
+                                )
+                                modelContext.insert(mission)
+                                try? modelContext.save()
+                                showToastMessage("Voice mission sent! 💙")
+                            })
+                        }
+                    }
+
+                    Spacer(minLength: 40)
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 16)
+            }
+        }
+        .navigationTitle("For \(partnerName)")
+        .navigationBarTitleDisplayMode(.large)
+        .overlay(alignment: .bottom) {
+            if showToast {
+                ToastView(message: toastMessage)
+                    .padding(.bottom, 32)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+        }
+        .animation(.spring(duration: 0.4), value: showToast)
+    }
+
+    private func sendMission(title: String) {
+        let mission = PartnerMission(
+            missionTitle: title,
+            missionDescription: "",
+            isCompleted: false,
+            weekNumber: currentWeek
+        )
+        modelContext.insert(mission)
+        try? modelContext.save()
+        showToastMessage("Sent to \(partnerName)! 💙")
+    }
+
+    private func showToastMessage(_ message: String) {
+        toastMessage = message
+        withAnimation { showToast = true }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            withAnimation { showToast = false }
+        }
+    }
+}

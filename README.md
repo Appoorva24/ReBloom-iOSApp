@@ -1,4 +1,4 @@
-# 🌸 ReBloom 🌸
+# ReBloom 🌸
 
 ReBloom is a postpartum recovery app designed to support mothers emotionally and physically after childbirth, while building a strong and connected healing journey with their partner.
 

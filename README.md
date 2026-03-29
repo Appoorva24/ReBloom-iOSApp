@@ -1,6 +1,8 @@
-# ReBloom 🌸
+# 🌸 ReBloom
 
-ReBloom is a postpartum recovery app designed to support mothers emotionally and physically after childbirth, while building a strong and connected healing journey with their partner.
+<p align="center">
+A gentle space for healing, connection, and recovery after childbirth.
+</p>
 
 ---
 
@@ -8,11 +10,11 @@ ReBloom is a postpartum recovery app designed to support mothers emotionally and
 
 This idea comes from my mother’s postpartum experience.
 
-After childbirth, much of the attention shifts to the baby, while the mother — who is going through physical recovery and emotional changes — is often left unsupported.
+After childbirth, much of the attention shifts to the baby, while the mother — going through physical recovery and emotional changes — is often left unsupported.
 
 This gap in care can make healing difficult, both physically and mentally.
 
-ReBloom was created to support mothers during this phase and ensure they feel cared for, understood, and not alone.
+ReBloom was created to support mothers during this phase and ensure they feel cared for, understood, and never alone.
 
 ---
 
@@ -21,34 +23,34 @@ ReBloom was created to support mothers during this phase and ensure they feel ca
 ### Mother Interface
 
 **Us (Connection Space)**
-A shared space where the mother can express her mood, send and receive love notes and heart notes, track missions, and monitor the bond meter.
+A shared emotional space where the mother can express her mood, exchange love notes and heart notes, track missions, and monitor the bond meter.
 
 **Memory Jar**
-A space to capture and preserve meaningful moments with the baby through notes and voice memories.
+A calm space to capture and preserve meaningful moments with the baby through notes and voice memories.
 
 **Heal**
-Guided exercises that support gentle physical recovery, including breathing, relaxation, and postpartum-safe movements.
+Guided exercises focused on gentle recovery, including breathing, relaxation, and postpartum-safe movements.
 
 ---
 
 ### Partner Interface
 
 **Us (Connection Space)**
-Allows the partner to view the mother’s mood, understand her emotional and physical changes, and track shared missions, love notes, and heart notes.
+Allows the partner to stay connected by understanding the mother’s mood, tracking emotional and physical changes, and engaging through shared missions and notes.
 
 **Memory Jar**
-Enables the partner to view and share special moments, building a shared memory experience.
+A shared space to view and contribute to special moments, strengthening emotional bonding.
 
 **Learn**
-Provides educational resources to help the partner better understand postpartum recovery and offer informed support.
+Thoughtful resources to help the partner understand postpartum recovery and offer more informed support.
 
 ---
 
 ## What Makes It Unique
 
-* Focuses on postpartum recovery rather than just baby care
+* Focused on postpartum recovery, beyond just baby care
 * Builds a shared emotional connection between mother and partner
-* Encourages active participation and support
+* Encourages active and meaningful participation
 * Combines emotional wellbeing, physical healing, and memory building
 
 ---
@@ -64,22 +66,26 @@ Provides educational resources to help the partner better understand postpartum 
 
 ## Goal
 
-To ensure that mothers feel supported throughout recovery, and partners feel empowered to actively contribute to the healing journey.
+To create a space where mothers feel supported throughout recovery,
+and partners feel empowered to actively contribute to the healing journey.
 
 ---
 
 ## Demo
 
-(Add your video link here)
+*Add your video link here*
 
 ---
 
 ## Author
 
-Appoorva
+**Appoorva**
 B.Tech CSE Student
 iOS Student Developer Program Participant
 
 ---
 
-Healing is not a solo journey. ReBloom is designed to grow together through it.
+<p align="center">
+Healing is not a solo journey. <br/>
+ReBloom is designed to grow through it — together.
+</p>

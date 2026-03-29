@@ -1,4 +1,4 @@
-# 🌸 ReBloom
+#  ReBloom 🌸
 
 <p align="center">
 A gentle space for healing, connection, and recovery after childbirth.
@@ -18,33 +18,32 @@ ReBloom was created to support mothers during this phase and ensure they feel ca
 
 ---
 
-## Features
+Features
+Mother Interface
 
-### Mother Interface
+Us (Connection Space)
+A shared space where the mother can express her mood, send and receive love notes and heart notes, track missions, and monitor the bond meter.
 
-**Us (Connection Space)**
-A shared emotional space where the mother can express her mood, exchange love notes and heart notes, track missions, and monitor the bond meter.
+Memory Jar
+A space to capture and preserve meaningful moments with the baby through notes and voice memories.
 
-**Memory Jar**
-A calm space to capture and preserve meaningful moments with the baby through notes and voice memories.
+Heal
+Guided exercises that support gentle physical recovery, including breathing, relaxation, and postpartum-safe movements.
 
-**Heal**
-Guided exercises focused on gentle recovery, including breathing, relaxation, and postpartum-safe movements.
+Partner Interface
 
----
+Us (Connection Space)
+Allows the partner to view the mother’s mood, understand her emotional and physical changes, and track shared missions, love notes, and heart notes.
 
-### Partner Interface
+Memory Jar
+Enables the partner to view and share special moments, building a shared memory experience.
 
-**Us (Connection Space)**
-Allows the partner to stay connected by understanding the mother’s mood, tracking emotional and physical changes, and engaging through shared missions and notes.
+Learn
+Provides educational resources to help the partner better understand postpartum recovery and offer informed support.
 
-**Memory Jar**
-A shared space to view and contribute to special moments, strengthening emotional bonding.
-
-**Learn**
-Thoughtful resources to help the partner understand postpartum recovery and offer more informed support.
 
 ---
+
 
 ## What Makes It Unique
 
@@ -53,7 +52,9 @@ Thoughtful resources to help the partner understand postpartum recovery and offe
 * Encourages active and meaningful participation
 * Combines emotional wellbeing, physical healing, and memory building
 
+
 ---
+
 
 ## Tech Stack
 
@@ -62,26 +63,33 @@ Thoughtful resources to help the partner understand postpartum recovery and offe
 * AVFoundation
 * Structured data models
 
+
 ---
+
 
 ## Goal
 
 To create a space where mothers feel supported throughout recovery,
 and partners feel empowered to actively contribute to the healing journey.
 
+
 ---
+
 
 ## Demo
 
 *Add your video link here*
 
+
 ---
+
 
 ## Author
 
-**Appoorva**
+
+**Appoorva Khajuria**
 B.Tech CSE Student
-iOS Student Developer Program Participant
+iOS App developer
 
 ---
 

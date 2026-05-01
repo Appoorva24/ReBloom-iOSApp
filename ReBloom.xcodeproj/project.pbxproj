@@ -1,0 +1,546 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2911303DA71F8C341D434D0A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D254C50DB32824A49907143 /* ContentView.swift */; };
+		EA41A4F771656CD3A3505607 /* ExerciseLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28087530E2FCA49171110AAC /* ExerciseLog.swift */; };
+		9AB5CBC0799384325C6FDBE4 /* LoveNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD88DDAA94663C22BB844A6 /* LoveNote.swift */; };
+		AF06180AEFC5A3B4F2FD11E3 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6AED7FB8A633BE666C3951 /* Memory.swift */; };
+		D9453E4EA28B2D651DC84529 /* MoodLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF37B6D0F34E923A2C3E21 /* MoodLog.swift */; };
+		BFB39162C1B5BE507A3F4AA7 /* PartnerMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E4371F647B31F7BBB61E2F /* PartnerMission.swift */; };
+		1EB7F382089807C556F9A10B /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1004D693BB94C1A2E20153 /* UserProfile.swift */; };
+		C21F19CCF97F57061153F85D /* ExerciseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FB536CDD0B407AA7D419DE /* ExerciseData.swift */; };
+		20635196110433C7E8EE25D8 /* ExerciseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117CDE07F1A6BB830DA086E8 /* ExerciseDetailView.swift */; };
+		42A8C1883F4BFEA403F54A7B /* HealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7EFA1ADACC2AE68C7AA1CF /* HealView.swift */; };
+		98407C9C28F4B52163150931 /* HomeDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA625816BD4E45B1096E8FAE /* HomeDashboardView.swift */; };
+		CB2A5B62338DD7E2B897B692 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21D59E2D73C65A725DD6611 /* JournalView.swift */; };
+		E4B4654CA06D55716F557FF5 /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D121695AFAB2303F737EA170 /* LearnView.swift */; };
+		0F2B046DBFFE201EB9E0C7E9 /* MemoryJarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF1DCC1D321738D138E828 /* MemoryJarView.swift */; };
+		3C7C2274A0E1DA6B7CF503AA /* MotherMissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F286F975674F2CF93D09528 /* MotherMissionsView.swift */; };
+		F291A9424039F96914DEB1EA /* MotherTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC9515939430F5B826C32D /* MotherTabView.swift */; };
+		6890607EB42A910673DED9E0 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF3C4827BB0ADD58C5BF4AB /* OnboardingView.swift */; };
+		0B471D3C938BA565FDBC987D /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2A9D9337404768F7A29426 /* SignInView.swift */; };
+		EB49C15F65B36D65172AB447 /* MasonryGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9A730F2A0E3E423E579BB5 /* MasonryGrid.swift */; };
+		EABD627D4DBA3EC86AB32F02 /* MissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F166763AC6208C136B6ADA13 /* MissionsView.swift */; };
+		F8E32F816EC5D7322F676220 /* PartnerHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63055C98D2ED6FDB5ABFFE64 /* PartnerHomeView.swift */; };
+		4AD5217DAD89A358DDFD5C89 /* PartnerMemoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82181840954933426392D13C /* PartnerMemoriesView.swift */; };
+		39C0B705733F6B12D102328E /* PartnerTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B58D0E542C7005EDD751D0B /* PartnerTabView.swift */; };
+		5814BDCDD5FF93ACA0A3A2CB /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC7C50D6A71F71103BEB45 /* ConnectionView.swift */; };
+		DBBF6448A34353AF62D2EDDE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8963A1A7DCCE1CE54861E /* ProfileView.swift */; };
+		BFD5D6360280BEA6632470E2 /* ReBloomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF0DF61F5F9CE0A74C4A3DA /* ReBloomApp.swift */; };
+		5359A9DB2C2F162AAF5509E5 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57661AA146D4C25FFAC8B41F /* AuthManager.swift */; };
+		C8F536673568684C7BF90D6A /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC18C77F9D36850FF33A0E3 /* ConnectionManager.swift */; };
+		C26201E2416ACA13DB7A5F4C /* ImageCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E28A969EC75EB9D66AA621D /* ImageCompressor.swift */; };
+		7939AAF1E05E61D1A675504D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B727A1735C2B453447558A4 /* KeychainHelper.swift */; };
+		067DC4D63E83FE1A6A8EEB4D /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B214307D8E1B8BDDB5901D4 /* SyncManager.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* SupabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E2D3C4B5A6978869504132 /* SupabaseManager.swift */; };
+		E2ED64529215A9D389E0CD9B /* ReBloomTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B79F5B881DBAC3C444C31CB /* ReBloomTheme.swift */; };
+		853FBADB0C963E688771F0D4 /* VoiceMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5060C1C7BB7A4BF0442251 /* VoiceMessageView.swift */; };
+		482A13E0953A93686F0F28DA /* VoicePlaybackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216398E6ED627C5643E8893B /* VoicePlaybackView.swift */; };
+		E09373B62A41AC75E9E6EDE4 /* VoiceRecorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDF8093DD72122AE487F45 /* VoiceRecorderManager.swift */; };
+		55A57581DCB309C265F3B53D /* ExerciseDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A097C767A564702590BB8A96 /* ExerciseDetailViewModel.swift */; };
+		941A94CDB78A18B1C4E610F3 /* HealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D750638253E1B951B76391 /* HealViewModel.swift */; };
+		E9781E145B96E81F5BF9376E /* HomeDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DE923AC84D4341E90974B1 /* HomeDashboardViewModel.swift */; };
+		2F6C7C0A56673340E3FFD188 /* JournalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC4C3147B593737C4CDB86 /* JournalViewModel.swift */; };
+		645E1DC52265D3EA49DA01BC /* MemoryJarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC3F9C8A6388CFC30575E0 /* MemoryJarViewModel.swift */; };
+		89B0D468890DA3573109B3D4 /* MissionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C4CCBBE6ACA7A9F40C467 /* MissionsViewModel.swift */; };
+		EACD1FCA7F3753CA3F47DF65 /* MotherMissionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C940FAE194AC3DD11843BA82 /* MotherMissionsViewModel.swift */; };
+		0C004F1A3B92DA1E6B87E2E1 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FF0FDC5795DCA95E1BD6F8 /* OnboardingViewModel.swift */; };
+		6BCC949459887EAAED692613 /* PartnerHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168C6B1FAB1C23A6D80FEC2B /* PartnerHomeViewModel.swift */; };
+		7037F28F9F9DE9A422C78734 /* PartnerMemoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B9E9F4BECE64BAEE5D2260 /* PartnerMemoriesViewModel.swift */; };
+		F4C83BC4E7E245C82F8BFFFD /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F957AA091BB7A02DCDB9C6E3 /* ProfileViewModel.swift */; };
+		85BD859CF14D5DA2DB8A931D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4561732D614431F7E9E89759 /* Assets.xcassets */; };
+		691085D50472BBDCC44D4C83 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 1BC80A3608F1B86D922A9428 /* Supabase */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3D254C50DB32824A49907143 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView.swift"; sourceTree = "<group>"; };
+		28087530E2FCA49171110AAC /* ExerciseLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseLog.swift"; sourceTree = "<group>"; };
+		3BD88DDAA94663C22BB844A6 /* LoveNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoveNote.swift"; sourceTree = "<group>"; };
+		FC6AED7FB8A633BE666C3951 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Memory.swift"; sourceTree = "<group>"; };
+		D1BF37B6D0F34E923A2C3E21 /* MoodLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoodLog.swift"; sourceTree = "<group>"; };
+		90E4371F647B31F7BBB61E2F /* PartnerMission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PartnerMission.swift"; sourceTree = "<group>"; };
+		BA1004D693BB94C1A2E20153 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile.swift"; sourceTree = "<group>"; };
+		12FB536CDD0B407AA7D419DE /* ExerciseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseData.swift"; sourceTree = "<group>"; };
+		117CDE07F1A6BB830DA086E8 /* ExerciseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseDetailView.swift"; sourceTree = "<group>"; };
+		BC7EFA1ADACC2AE68C7AA1CF /* HealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealView.swift"; sourceTree = "<group>"; };
+		DA625816BD4E45B1096E8FAE /* HomeDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeDashboardView.swift"; sourceTree = "<group>"; };
+		D21D59E2D73C65A725DD6611 /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JournalView.swift"; sourceTree = "<group>"; };
+		D121695AFAB2303F737EA170 /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LearnView.swift"; sourceTree = "<group>"; };
+		93CF1DCC1D321738D138E828 /* MemoryJarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoryJarView.swift"; sourceTree = "<group>"; };
+		7F286F975674F2CF93D09528 /* MotherMissionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MotherMissionsView.swift"; sourceTree = "<group>"; };
+		55DC9515939430F5B826C32D /* MotherTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MotherTabView.swift"; sourceTree = "<group>"; };
+		2AF3C4827BB0ADD58C5BF4AB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView.swift"; sourceTree = "<group>"; };
+		4E2A9D9337404768F7A29426 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignInView.swift"; sourceTree = "<group>"; };
+		AE9A730F2A0E3E423E579BB5 /* MasonryGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MasonryGrid.swift"; sourceTree = "<group>"; };
+		F166763AC6208C136B6ADA13 /* MissionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MissionsView.swift"; sourceTree = "<group>"; };
+		63055C98D2ED6FDB5ABFFE64 /* PartnerHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PartnerHomeView.swift"; sourceTree = "<group>"; };
+		82181840954933426392D13C /* PartnerMemoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PartnerMemoriesView.swift"; sourceTree = "<group>"; };
+		2B58D0E542C7005EDD751D0B /* PartnerTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PartnerTabView.swift"; sourceTree = "<group>"; };
+		53BC7C50D6A71F71103BEB45 /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConnectionView.swift"; sourceTree = "<group>"; };
+		3AF8963A1A7DCCE1CE54861E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileView.swift"; sourceTree = "<group>"; };
+		6EF0DF61F5F9CE0A74C4A3DA /* ReBloomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReBloomApp.swift"; sourceTree = "<group>"; };
+		57661AA146D4C25FFAC8B41F /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthManager.swift"; sourceTree = "<group>"; };
+		0CC18C77F9D36850FF33A0E3 /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConnectionManager.swift"; sourceTree = "<group>"; };
+		6E28A969EC75EB9D66AA621D /* ImageCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCompressor.swift"; sourceTree = "<group>"; };
+		7B727A1735C2B453447558A4 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainHelper.swift"; sourceTree = "<group>"; };
+		9B214307D8E1B8BDDB5901D4 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager.swift"; sourceTree = "<group>"; };
+		F1E2D3C4B5A6978869504132 /* SupabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SupabaseManager.swift"; sourceTree = "<group>"; };
+		7B79F5B881DBAC3C444C31CB /* ReBloomTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReBloomTheme.swift"; sourceTree = "<group>"; };
+		0F5060C1C7BB7A4BF0442251 /* VoiceMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VoiceMessageView.swift"; sourceTree = "<group>"; };
+		216398E6ED627C5643E8893B /* VoicePlaybackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VoicePlaybackView.swift"; sourceTree = "<group>"; };
+		02BDF8093DD72122AE487F45 /* VoiceRecorderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VoiceRecorderManager.swift"; sourceTree = "<group>"; };
+		A097C767A564702590BB8A96 /* ExerciseDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseDetailViewModel.swift"; sourceTree = "<group>"; };
+		80D750638253E1B951B76391 /* HealViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealViewModel.swift"; sourceTree = "<group>"; };
+		D5DE923AC84D4341E90974B1 /* HomeDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeDashboardViewModel.swift"; sourceTree = "<group>"; };
+		C4AC4C3147B593737C4CDB86 /* JournalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JournalViewModel.swift"; sourceTree = "<group>"; };
+		63DC3F9C8A6388CFC30575E0 /* MemoryJarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoryJarViewModel.swift"; sourceTree = "<group>"; };
+		1D6C4CCBBE6ACA7A9F40C467 /* MissionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MissionsViewModel.swift"; sourceTree = "<group>"; };
+		C940FAE194AC3DD11843BA82 /* MotherMissionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MotherMissionsViewModel.swift"; sourceTree = "<group>"; };
+		87FF0FDC5795DCA95E1BD6F8 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewModel.swift"; sourceTree = "<group>"; };
+		168C6B1FAB1C23A6D80FEC2B /* PartnerHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PartnerHomeViewModel.swift"; sourceTree = "<group>"; };
+		91B9E9F4BECE64BAEE5D2260 /* PartnerMemoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PartnerMemoriesViewModel.swift"; sourceTree = "<group>"; };
+		F957AA091BB7A02DCDB9C6E3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileViewModel.swift"; sourceTree = "<group>"; };
+		4561732D614431F7E9E89759 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		71CCD365E3A654DA84DBA191 /* ReBloom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReBloom.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E07120471D7CAA46DCD94528 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				691085D50472BBDCC44D4C83 /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8D3FC6DB5D0827F168A73277 = {
+			isa = PBXGroup;
+			children = (
+				6121D21274826F299412D5F9 /* ReBloom */,
+				1BADDC1D73C1A20F347483E1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1BADDC1D73C1A20F347483E1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				71CCD365E3A654DA84DBA191 /* ReBloom.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6121D21274826F299412D5F9 /* ReBloom */ = {
+			isa = PBXGroup;
+			children = (
+				9CF43B31E8845D861542A38E /* Models */,
+				BF8681479C709E49A19144C9 /* Mother */,
+				F467D01D692B3A88E4002CFB /* Onboarding */,
+				FC35731DFA2F227499D65650 /* Partner */,
+				789AE9565326059CDBBFFD32 /* Profile */,
+				564EAF51B7DD4639ADD9B985 /* Services */,
+				000F0E5685D42807A7310EA7 /* Shared */,
+				420CEB417186B52ECF642348 /* ViewModels */,
+				3D254C50DB32824A49907143 /* ContentView.swift */,
+				6EF0DF61F5F9CE0A74C4A3DA /* ReBloomApp.swift */,
+				4561732D614431F7E9E89759 /* Assets.xcassets */,
+			);
+			path = ReBloom;
+			sourceTree = "<group>";
+		};
+		9CF43B31E8845D861542A38E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				28087530E2FCA49171110AAC /* ExerciseLog.swift */,
+				3BD88DDAA94663C22BB844A6 /* LoveNote.swift */,
+				FC6AED7FB8A633BE666C3951 /* Memory.swift */,
+				D1BF37B6D0F34E923A2C3E21 /* MoodLog.swift */,
+				90E4371F647B31F7BBB61E2F /* PartnerMission.swift */,
+				BA1004D693BB94C1A2E20153 /* UserProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BF8681479C709E49A19144C9 /* Mother */ = {
+			isa = PBXGroup;
+			children = (
+				12FB536CDD0B407AA7D419DE /* ExerciseData.swift */,
+				117CDE07F1A6BB830DA086E8 /* ExerciseDetailView.swift */,
+				BC7EFA1ADACC2AE68C7AA1CF /* HealView.swift */,
+				DA625816BD4E45B1096E8FAE /* HomeDashboardView.swift */,
+				D21D59E2D73C65A725DD6611 /* JournalView.swift */,
+				D121695AFAB2303F737EA170 /* LearnView.swift */,
+				93CF1DCC1D321738D138E828 /* MemoryJarView.swift */,
+				7F286F975674F2CF93D09528 /* MotherMissionsView.swift */,
+				55DC9515939430F5B826C32D /* MotherTabView.swift */,
+			);
+			path = Mother;
+			sourceTree = "<group>";
+		};
+		F467D01D692B3A88E4002CFB /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				2AF3C4827BB0ADD58C5BF4AB /* OnboardingView.swift */,
+				4E2A9D9337404768F7A29426 /* SignInView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		FC35731DFA2F227499D65650 /* Partner */ = {
+			isa = PBXGroup;
+			children = (
+				AE9A730F2A0E3E423E579BB5 /* MasonryGrid.swift */,
+				F166763AC6208C136B6ADA13 /* MissionsView.swift */,
+				63055C98D2ED6FDB5ABFFE64 /* PartnerHomeView.swift */,
+				82181840954933426392D13C /* PartnerMemoriesView.swift */,
+				2B58D0E542C7005EDD751D0B /* PartnerTabView.swift */,
+			);
+			path = Partner;
+			sourceTree = "<group>";
+		};
+		789AE9565326059CDBBFFD32 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				53BC7C50D6A71F71103BEB45 /* ConnectionView.swift */,
+				3AF8963A1A7DCCE1CE54861E /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		564EAF51B7DD4639ADD9B985 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				57661AA146D4C25FFAC8B41F /* AuthManager.swift */,
+				0CC18C77F9D36850FF33A0E3 /* ConnectionManager.swift */,
+				6E28A969EC75EB9D66AA621D /* ImageCompressor.swift */,
+				7B727A1735C2B453447558A4 /* KeychainHelper.swift */,
+				9B214307D8E1B8BDDB5901D4 /* SyncManager.swift */,
+				F1E2D3C4B5A6978869504132 /* SupabaseManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		000F0E5685D42807A7310EA7 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				7B79F5B881DBAC3C444C31CB /* ReBloomTheme.swift */,
+				0F5060C1C7BB7A4BF0442251 /* VoiceMessageView.swift */,
+				216398E6ED627C5643E8893B /* VoicePlaybackView.swift */,
+				02BDF8093DD72122AE487F45 /* VoiceRecorderManager.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		420CEB417186B52ECF642348 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A097C767A564702590BB8A96 /* ExerciseDetailViewModel.swift */,
+				80D750638253E1B951B76391 /* HealViewModel.swift */,
+				D5DE923AC84D4341E90974B1 /* HomeDashboardViewModel.swift */,
+				C4AC4C3147B593737C4CDB86 /* JournalViewModel.swift */,
+				63DC3F9C8A6388CFC30575E0 /* MemoryJarViewModel.swift */,
+				1D6C4CCBBE6ACA7A9F40C467 /* MissionsViewModel.swift */,
+				C940FAE194AC3DD11843BA82 /* MotherMissionsViewModel.swift */,
+				87FF0FDC5795DCA95E1BD6F8 /* OnboardingViewModel.swift */,
+				168C6B1FAB1C23A6D80FEC2B /* PartnerHomeViewModel.swift */,
+				91B9E9F4BECE64BAEE5D2260 /* PartnerMemoriesViewModel.swift */,
+				F957AA091BB7A02DCDB9C6E3 /* ProfileViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		88F56D6A2F90F79D5F551E46 /* ReBloom */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D077725858AD167A4E490CE /* Build configuration list for PBXNativeTarget "ReBloom" */;
+			buildPhases = (
+				0998B95F2E75B94331298940 /* Sources */,
+				E07120471D7CAA46DCD94528 /* Frameworks */,
+				90D3309A3EDE29A4CEBB8E14 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ReBloom;
+			packageProductDependencies = (
+				1BC80A3608F1B86D922A9428 /* Supabase */,
+			);
+			productName = ReBloom;
+			productReference = 71CCD365E3A654DA84DBA191 /* ReBloom.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		918C003BCFAD5126596AF1AD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					88F56D6A2F90F79D5F551E46 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 33F86CC1D0234A914F179743 /* Build configuration list for PBXProject "ReBloom" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8D3FC6DB5D0827F168A73277;
+			packageReferences = (
+				E13D17D5DF916DF9343B2823 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			productRefGroup = 1BADDC1D73C1A20F347483E1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				88F56D6A2F90F79D5F551E46 /* ReBloom */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		90D3309A3EDE29A4CEBB8E14 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85BD859CF14D5DA2DB8A931D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0998B95F2E75B94331298940 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2911303DA71F8C341D434D0A /* ContentView.swift in Sources */,
+				EA41A4F771656CD3A3505607 /* ExerciseLog.swift in Sources */,
+				9AB5CBC0799384325C6FDBE4 /* LoveNote.swift in Sources */,
+				AF06180AEFC5A3B4F2FD11E3 /* Memory.swift in Sources */,
+				D9453E4EA28B2D651DC84529 /* MoodLog.swift in Sources */,
+				BFB39162C1B5BE507A3F4AA7 /* PartnerMission.swift in Sources */,
+				1EB7F382089807C556F9A10B /* UserProfile.swift in Sources */,
+				C21F19CCF97F57061153F85D /* ExerciseData.swift in Sources */,
+				20635196110433C7E8EE25D8 /* ExerciseDetailView.swift in Sources */,
+				42A8C1883F4BFEA403F54A7B /* HealView.swift in Sources */,
+				98407C9C28F4B52163150931 /* HomeDashboardView.swift in Sources */,
+				CB2A5B62338DD7E2B897B692 /* JournalView.swift in Sources */,
+				E4B4654CA06D55716F557FF5 /* LearnView.swift in Sources */,
+				0F2B046DBFFE201EB9E0C7E9 /* MemoryJarView.swift in Sources */,
+				3C7C2274A0E1DA6B7CF503AA /* MotherMissionsView.swift in Sources */,
+				F291A9424039F96914DEB1EA /* MotherTabView.swift in Sources */,
+				6890607EB42A910673DED9E0 /* OnboardingView.swift in Sources */,
+				0B471D3C938BA565FDBC987D /* SignInView.swift in Sources */,
+				EB49C15F65B36D65172AB447 /* MasonryGrid.swift in Sources */,
+				EABD627D4DBA3EC86AB32F02 /* MissionsView.swift in Sources */,
+				F8E32F816EC5D7322F676220 /* PartnerHomeView.swift in Sources */,
+				4AD5217DAD89A358DDFD5C89 /* PartnerMemoriesView.swift in Sources */,
+				39C0B705733F6B12D102328E /* PartnerTabView.swift in Sources */,
+				5814BDCDD5FF93ACA0A3A2CB /* ConnectionView.swift in Sources */,
+				DBBF6448A34353AF62D2EDDE /* ProfileView.swift in Sources */,
+				BFD5D6360280BEA6632470E2 /* ReBloomApp.swift in Sources */,
+				5359A9DB2C2F162AAF5509E5 /* AuthManager.swift in Sources */,
+				C8F536673568684C7BF90D6A /* ConnectionManager.swift in Sources */,
+				C26201E2416ACA13DB7A5F4C /* ImageCompressor.swift in Sources */,
+				7939AAF1E05E61D1A675504D /* KeychainHelper.swift in Sources */,
+				067DC4D63E83FE1A6A8EEB4D /* SyncManager.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E1F2 /* SupabaseManager.swift in Sources */,
+				E2ED64529215A9D389E0CD9B /* ReBloomTheme.swift in Sources */,
+				853FBADB0C963E688771F0D4 /* VoiceMessageView.swift in Sources */,
+				482A13E0953A93686F0F28DA /* VoicePlaybackView.swift in Sources */,
+				E09373B62A41AC75E9E6EDE4 /* VoiceRecorderManager.swift in Sources */,
+				55A57581DCB309C265F3B53D /* ExerciseDetailViewModel.swift in Sources */,
+				941A94CDB78A18B1C4E610F3 /* HealViewModel.swift in Sources */,
+				E9781E145B96E81F5BF9376E /* HomeDashboardViewModel.swift in Sources */,
+				2F6C7C0A56673340E3FFD188 /* JournalViewModel.swift in Sources */,
+				645E1DC52265D3EA49DA01BC /* MemoryJarViewModel.swift in Sources */,
+				89B0D468890DA3573109B3D4 /* MissionsViewModel.swift in Sources */,
+				EACD1FCA7F3753CA3F47DF65 /* MotherMissionsViewModel.swift in Sources */,
+				0C004F1A3B92DA1E6B87E2E1 /* OnboardingViewModel.swift in Sources */,
+				6BCC949459887EAAED692613 /* PartnerHomeViewModel.swift in Sources */,
+				7037F28F9F9DE9A422C78734 /* PartnerMemoriesViewModel.swift in Sources */,
+				F4C83BC4E7E245C82F8BFFFD /* ProfileViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0F10F756D1F2720396F5828C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C031032C193506799705CC10 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		54C777A32723F76CB3420D9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+			ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+			CODE_SIGN_STYLE = Automatic;
+			CURRENT_PROJECT_VERSION = 1;
+			DEVELOPMENT_TEAM = 296JY5T9QX;
+			GENERATE_INFOPLIST_FILE = YES;
+			INFOPLIST_FILE = ReBloom/Info.plist;
+			INFOPLIST_KEY_CFBundleDisplayName = ReBloom;
+			INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+			INFOPLIST_KEY_NSCameraUsageDescription = "ReBloom uses the camera so you can capture special moments for your Memory Jar.";
+			INFOPLIST_KEY_NSMicrophoneUsageDescription = "ReBloom uses the microphone so you can send voice missions and voice notes to your partner.";
+			INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "ReBloom uses your photo library so you can save special moments to your Memory Jar.";
+			INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+			INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+			INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+			INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+			INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+			IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+			LD_RUNPATH_SEARCH_PATHS = (
+				"$(inherited)",
+				"@executable_path/Frameworks",
+			);
+			MARKETING_VERSION = 1.0;
+			PRODUCT_BUNDLE_IDENTIFIER = com.appoorva.Rebloom;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+			SUPPORTS_MACCATALYST = NO;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1C4852E57A2EB7505670A025 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+			ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+			CODE_SIGN_STYLE = Automatic;
+			CURRENT_PROJECT_VERSION = 1;
+			DEVELOPMENT_TEAM = 296JY5T9QX;
+			GENERATE_INFOPLIST_FILE = YES;
+			INFOPLIST_FILE = ReBloom/Info.plist;
+			INFOPLIST_KEY_CFBundleDisplayName = ReBloom;
+			INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+			INFOPLIST_KEY_NSCameraUsageDescription = "ReBloom uses the camera so you can capture special moments for your Memory Jar.";
+			INFOPLIST_KEY_NSMicrophoneUsageDescription = "ReBloom uses the microphone so you can send voice missions and voice notes to your partner.";
+			INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "ReBloom uses your photo library so you can save special moments to your Memory Jar.";
+			INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+			INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+			INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+			INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+			INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+			IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+			LD_RUNPATH_SEARCH_PATHS = (
+				"$(inherited)",
+				"@executable_path/Frameworks",
+			);
+			MARKETING_VERSION = 1.0;
+			PRODUCT_BUNDLE_IDENTIFIER = com.appoorva.Rebloom;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+			SUPPORTS_MACCATALYST = NO;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		33F86CC1D0234A914F179743 /* Build configuration list for PBXProject "ReBloom" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F10F756D1F2720396F5828C /* Debug */,
+				C031032C193506799705CC10 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D077725858AD167A4E490CE /* Build configuration list for PBXNativeTarget "ReBloom" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54C777A32723F76CB3420D9E /* Debug */,
+				1C4852E57A2EB7505670A025 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E13D17D5DF916DF9343B2823 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1BC80A3608F1B86D922A9428 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E13D17D5DF916DF9343B2823 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+	};
+	rootObject = 918C003BCFAD5126596AF1AD /* Project object */;
+}

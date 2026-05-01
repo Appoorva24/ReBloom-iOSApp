@@ -55,10 +55,11 @@ Provides educational resources to help the partner better understand postpartum 
 
 ## Tech Stack
 
-* SwiftUI
-* Swift Playgrounds (.swiftpm)
+* SwiftUI (Xcode project)
+* SwiftData
+* Supabase (backend)
 * AVFoundation
-* Structured data models
+* Sign in with Apple
 
 ---
 

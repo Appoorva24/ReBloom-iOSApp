@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import PhotosUI
 
 struct ProfileView: View {
     @Environment(\.dismiss) private var dismiss
@@ -7,6 +8,8 @@ struct ProfileView: View {
     @AppStorage("onboardingDone") private var onboardingDone = false
     @State private var vm = ProfileViewModel()
     @State private var showConnectionSheet = false
+    @State private var selectedItem: PhotosPickerItem?
+    @Environment(ConnectionManager.self) private var connectionManager
 
     var body: some View {
         NavigationStack {
@@ -14,21 +17,52 @@ struct ProfileView: View {
                 
                 Section {
                     HStack(spacing: 16) {
-                        Circle()
-                            .fill(
-                                LinearGradient(
-                                    colors: vm.profile?.role == "husband"
-                                        ? [.partnerPrimary, .partnerSecondary]
-                                        : [.motherPrimary, .motherSecondary],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .frame(width: 64, height: 64)
-                            .overlay(
-                                Text(vm.profile?.role == "husband" ? "💙" : "🌸")
-                                    .font(.title)
-                            )
+                        PhotosPicker(selection: $selectedItem, matching: .images) {
+                            ZStack {
+                                if let urlString = vm.profileImageURL, let url = URL(string: urlString) {
+                                    AsyncImage(url: url) { image in
+                                        image.resizable()
+                                            .scaledToFill()
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .frame(width: 64, height: 64)
+                                    .clipShape(Circle())
+                                } else {
+                                    Circle()
+                                        .fill(
+                                            LinearGradient(
+                                                colors: vm.profile?.role == "husband"
+                                                    ? [.partnerPrimary, .partnerSecondary]
+                                                    : [.motherPrimary, .motherSecondary],
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            )
+                                        )
+                                        .frame(width: 64, height: 64)
+                                        .overlay(
+                                            Text(vm.profile?.role == "husband" ? "💙" : "🌸")
+                                                .font(.title)
+                                        )
+                                }
+                                
+                                if vm.isUploadingImage {
+                                    Circle()
+                                        .fill(Color.black.opacity(0.4))
+                                        .frame(width: 64, height: 64)
+                                    ProgressView()
+                                        .tint(.white)
+                                }
+                            }
+                        }
+                        .buttonStyle(.plain)
+                        .onChange(of: selectedItem) { _, newItem in
+                            Task {
+                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                    await vm.uploadProfileImage(data, modelContext: modelContext, connectionManager: connectionManager)
+                                }
+                            }
+                        }
 
                         VStack(alignment: .leading, spacing: 4) {
                             if vm.isEditing {
@@ -164,7 +198,12 @@ struct ProfileView: View {
                 }
             }
             .navigationTitle("Profile")
-            .onAppear { vm.load(modelContext: modelContext) }
+            .onAppear { 
+                vm.load(modelContext: modelContext)
+                Task {
+                    await vm.loadProfileImageFromSupabase(connectionManager: connectionManager)
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     if vm.isEditing {

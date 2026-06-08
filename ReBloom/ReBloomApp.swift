@@ -6,9 +6,10 @@ struct ReBloomApp: App {
     let container: ModelContainer
     
     // Services
-    @State private var authManager = AuthManager()
+    @State private var authManager: AuthManager
     @State private var connectionManager: ConnectionManager
     @State private var syncManager: SyncManager
+    @State private var notificationService: NotificationService
 
     init() {
         let schema = Schema([
@@ -38,10 +39,15 @@ struct ReBloomApp: App {
         let auth = AuthManager()
         let conn = ConnectionManager(authManager: auth)
         let sync = SyncManager(authManager: auth)
+        let notifs = NotificationService()
+        
+        // Wire notification service into sync manager
+        sync.notificationService = notifs
         
         _authManager = State(initialValue: auth)
         _connectionManager = State(initialValue: conn)
         _syncManager = State(initialValue: sync)
+        _notificationService = State(initialValue: notifs)
     }
 
     var body: some Scene {
@@ -50,6 +56,7 @@ struct ReBloomApp: App {
                 .environment(authManager)
                 .environment(connectionManager)
                 .environment(syncManager)
+                .environment(notificationService)
         }
         .modelContainer(container)
     }

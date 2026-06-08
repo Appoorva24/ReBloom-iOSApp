@@ -9,10 +9,13 @@ final class MissionsViewModel {
     // MARK: - State
     var expandedId: UUID?
     var ringProgress: CGFloat = 0
+    var isLoading = false
+    var errorMessage: String?
 
     // MARK: - Computed
     var completedCount: Int { missions.filter { $0.isCompleted }.count }
     var totalCount: Int { missions.count }
+    var isEmpty: Bool { missions.isEmpty && !isLoading }
 
     var progressValue: CGFloat {
         guard totalCount > 0 else { return 0 }
@@ -33,15 +36,20 @@ final class MissionsViewModel {
         try? modelContext.save()
     }
 
-    func markComplete(_ mission: PartnerMission, modelContext: ModelContext, syncManager: SyncManager? = nil) {
+    func markComplete(_ mission: PartnerMission, modelContext: ModelContext, syncManager: SyncManager) {
         withAnimation(.spring(duration: 0.35, bounce: 0.4)) {
             mission.isCompleted = true
             try? modelContext.save()
         }
         load(modelContext: modelContext)
         
-        if let sync = syncManager {
-            Task { try? await sync.syncMissions(modelContext: modelContext) }
+        // Always sync to Supabase
+        Task {
+            do {
+                try await syncManager.syncMissions(modelContext: modelContext)
+            } catch {
+                print("[Missions] Sync failed: \(error)")
+            }
         }
     }
 

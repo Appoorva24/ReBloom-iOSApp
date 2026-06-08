@@ -1,16 +1,25 @@
 import SwiftUI
-import AuthenticationServices
 
 struct SignInView: View {
     @Environment(AuthManager.self) private var authManager
     
+    var isMother: Bool = true
+    
     @State private var appeared = false
+    @State private var email = ""
+    @State private var password = ""
+    
+    private var themePrimary: Color { isMother ? .motherPrimary : .partnerPrimary }
+    private var themeSecondary: Color { isMother ? .motherSecondary : .partnerSecondary }
+    private var themeBgTop: Color { isMother ? .motherBgTop : .partnerBgTop }
+    private var themeBgBottom: Color { isMother ? .motherBgBottom : .partnerBgBottom }
+    private var themeText: Color { isMother ? .motherTextBody : .partnerNavy }
     
     var body: some View {
         ZStack {
             // Background gradient matching existing app style
             LinearGradient(
-                colors: [Color.motherBgTop, Color.motherBgBottom],
+                colors: [themeBgTop, themeBgBottom],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -21,8 +30,12 @@ struct SignInView: View {
                 
                 // Logo area
                 VStack(spacing: 16) {
-                    Text("🌸")
-                        .font(.system(size: 72))
+                    Image("logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 90, height: 90)
+                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                        .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
                         .scaleEffect(appeared ? 1.0 : 0.5)
                         .opacity(appeared ? 1.0 : 0.0)
                     
@@ -30,7 +43,7 @@ struct SignInView: View {
                         .font(.system(size: 36, weight: .bold, design: .rounded))
                         .foregroundStyle(
                             LinearGradient(
-                                colors: [.motherPrimary, .motherSecondary],
+                                colors: [themePrimary, themeSecondary],
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -40,33 +53,82 @@ struct SignInView: View {
                     Text("Your postpartum journey,\ntogether.")
                         .font(.title3.weight(.medium))
                         .fontDesign(.rounded)
-                        .foregroundStyle(Color.motherTextBody)
+                        .foregroundStyle(themeText)
                         .multilineTextAlignment(.center)
                         .lineSpacing(4)
                         .opacity(appeared ? 1.0 : 0.0)
                 }
-                .padding(.bottom, 60)
+                .padding(.bottom, 40)
                 
                 Spacer()
                 
-                // Sign in with Apple button
+                // Email and Password Login
                 VStack(spacing: 16) {
-                    SignInWithAppleButton(.signIn) { request in
-                        request.requestedScopes = [.fullName]
-                    } onCompletion: { result in
-                        authManager.handleSignInResult(result)
+                    VStack(spacing: 12) {
+                        TextField("Email", text: $email)
+                            .keyboardType(.emailAddress)
+                            .textInputAutocapitalization(.never)
+                            .padding()
+                            .background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                            .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                        
+                        SecureField("Password", text: $password)
+                            .padding()
+                            .background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                            .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
                     }
-                    .signInWithAppleButtonStyle(.black)
-                    .frame(height: 54)
-                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                    .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+                    .padding(.bottom, 8)
                     
-                    Text("Sign in to sync your data across devices\nand connect with your partner.")
-                        .font(.caption)
-                        .fontDesign(.rounded)
-                        .foregroundStyle(Color.motherTextBody.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(3)
+                    Button {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        Task {
+                            await authManager.signIn(email: email, password: password)
+                        }
+                    } label: {
+                        if authManager.isLoading {
+                            ProgressView()
+                                .tint(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 16)
+                                .background(themePrimary)
+                                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                        } else {
+                            Text("Sign In")
+                                .font(.headline)
+                                .fontDesign(.rounded)
+                                .foregroundStyle(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 16)
+                                .background(themePrimary)
+                                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                        }
+                    }
+                    .disabled(email.isEmpty || password.isEmpty || authManager.isLoading)
+                    .opacity((email.isEmpty || password.isEmpty) ? 0.6 : 1.0)
+                    
+                    Button {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        Task {
+                            await authManager.signUp(email: email, password: password)
+                        }
+                    } label: {
+                        Text("Create Account")
+                            .font(.headline)
+                            .fontDesign(.rounded)
+                            .foregroundStyle(themePrimary)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .stroke(themePrimary.opacity(0.3), lineWidth: 1)
+                            )
+                    }
+                    .disabled(email.isEmpty || password.isEmpty || authManager.isLoading)
+                    .opacity((email.isEmpty || password.isEmpty) ? 0.6 : 1.0)
                     
                     if let error = authManager.authError {
                         Text(error)
@@ -74,7 +136,7 @@ struct SignInView: View {
                             .fontDesign(.rounded)
                             .foregroundStyle(.red)
                             .multilineTextAlignment(.center)
-                            .padding(.top, 4)
+                            .padding(.top, 8)
                     }
                 }
                 .padding(.horizontal, 32)

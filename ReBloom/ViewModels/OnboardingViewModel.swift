@@ -31,12 +31,11 @@ final class OnboardingViewModel {
             partnerName: partnerName,
             onboardingComplete: true,
             firstLaunchDate: Date(),
-            inviteCode: code
+            inviteCode: selectedRole == "wife" ? code : ""
         )
         modelContext.insert(profile)
         try? modelContext.save()
 
-        // TODO: Upload user to Supabase
         Task {
             do {
                 try await connectionManager.createUserRecord(
@@ -44,7 +43,7 @@ final class OnboardingViewModel {
                     role: selectedRole,
                     babyName: babyName,
                     babyBirthDate: babyBirthDate,
-                    code: code
+                    code: selectedRole == "wife" ? code : ""
                 )
             } catch {
                 // Offline — will sync later

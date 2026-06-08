@@ -10,6 +10,8 @@ final class MotherMissionsViewModel {
     var customMission = ""
     var showToast = false
     var toastMessage = ""
+    var isLoading = false
+    var errorMessage: String?
 
     // MARK: - Computed
     var profile: UserProfile? { profiles.first }
@@ -32,7 +34,7 @@ final class MotherMissionsViewModel {
     }
 
     // MARK: - Actions
-    func sendMission(title: String, modelContext: ModelContext, syncManager: SyncManager? = nil) {
+    func sendMission(title: String, modelContext: ModelContext, syncManager: SyncManager) {
         let mission = PartnerMission(
             missionTitle: title,
             missionDescription: "",
@@ -43,12 +45,17 @@ final class MotherMissionsViewModel {
         try? modelContext.save()
         showToastMessage("Sent to \(partnerName)! 💙")
         
-        if let sync = syncManager {
-            Task { try? await sync.syncMissions(modelContext: modelContext) }
+        // Always sync to Supabase
+        Task {
+            do {
+                try await syncManager.syncMissions(modelContext: modelContext)
+            } catch {
+                print("[MotherMissions] Mission sync failed: \(error)")
+            }
         }
     }
 
-    func sendVoiceMission(data: Data, modelContext: ModelContext, syncManager: SyncManager? = nil) {
+    func sendVoiceMission(data: Data, modelContext: ModelContext, syncManager: SyncManager) {
         let encoded = "[VOICE:\(data.base64EncodedString())]"
         let mission = PartnerMission(
             missionTitle: "🎙️ Voice Mission",
@@ -61,8 +68,13 @@ final class MotherMissionsViewModel {
         try? modelContext.save()
         showToastMessage("Voice mission sent! 💙")
         
-        if let sync = syncManager {
-            Task { try? await sync.syncMissions(modelContext: modelContext) }
+        // Always sync to Supabase
+        Task {
+            do {
+                try await syncManager.syncMissions(modelContext: modelContext)
+            } catch {
+                print("[MotherMissions] Voice mission sync failed: \(error)")
+            }
         }
     }
 

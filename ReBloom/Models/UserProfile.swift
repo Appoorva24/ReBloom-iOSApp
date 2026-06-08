@@ -13,6 +13,7 @@ final class UserProfile {
     var firstLaunchDate: Date
     var inviteCode: String
     var partnerID: String?
+    var profileImageURL: String?
     
     init(
         id: UUID = UUID(),
@@ -24,7 +25,8 @@ final class UserProfile {
         onboardingComplete: Bool = false,
         firstLaunchDate: Date = Date(),
         inviteCode: String = "",
-        partnerID: String? = nil
+        partnerID: String? = nil,
+        profileImageURL: String? = nil
     ) {
         self.id = id
         self.name = name
@@ -36,6 +38,7 @@ final class UserProfile {
         self.firstLaunchDate = firstLaunchDate
         self.inviteCode = inviteCode
         self.partnerID = partnerID
+        self.profileImageURL = profileImageURL
     }
     
     // MARK: - Computed Properties
@@ -47,6 +50,21 @@ final class UserProfile {
     var daysPostpartum: Int {
         let days = Calendar.current.dateComponents([.day], from: babyBirthDate, to: Date()).day ?? 0
         return max(0, days)
+    }
+    
+    /// Alias used by ExerciseDetailViewModel
+    var weeksPostpartum: Int { postpartumWeek }
+    
+    /// Current week number from first launch (for exercise progression)
+    var currentWeekNumber: Int {
+        let weeks = Calendar.current.dateComponents([.weekOfYear], from: firstLaunchDate, to: Date()).weekOfYear ?? 0
+        return max(1, weeks + 1)
+    }
+    
+    /// Current day within the current week (1-7)
+    var currentDayInWeek: Int {
+        let days = Calendar.current.dateComponents([.day], from: firstLaunchDate, to: Date()).day ?? 0
+        return (days % 7) + 1
     }
     
     var babyAgeFormatted: String {

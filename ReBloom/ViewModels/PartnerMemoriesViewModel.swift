@@ -12,9 +12,12 @@ final class PartnerMemoriesViewModel {
     var selectedMemory: Memory? = nil
     var showToast = false
     var toastMessage = ""
+    var isLoading = false
+    var errorMessage: String?
 
     // MARK: - Computed
     var profile: UserProfile? { profiles.first }
+    var isEmpty: Bool { memories.isEmpty && !isLoading }
 
     var memories: [Memory] {
         allMemories.filter { $0.sharedBy == "husband" || $0.isSharedWithPartner }
@@ -30,12 +33,21 @@ final class PartnerMemoriesViewModel {
     }
 
     // MARK: - Actions
-    func saveMemory(_ memory: Memory, modelContext: ModelContext) {
+    func saveMemory(_ memory: Memory, modelContext: ModelContext, syncManager: SyncManager) {
         modelContext.insert(memory)
         try? modelContext.save()
         toastMessage = "Memory saved 🫙✨"
         showToast = true
         load(modelContext: modelContext)
+        
+        // Always sync to Supabase
+        Task {
+            do {
+                try await syncManager.syncMemories(modelContext: modelContext)
+            } catch {
+                print("[PartnerMemories] Sync failed: \(error)")
+            }
+        }
     }
 
     func markMemoriesAsSeen(modelContext: ModelContext) {

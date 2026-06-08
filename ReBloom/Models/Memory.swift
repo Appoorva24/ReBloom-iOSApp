@@ -11,6 +11,7 @@ final class Memory {
     var isSharedWithPartner: Bool
     var isNewForPartner: Bool
     var sharedBy: String
+    var imageURL: String?
     
     init(
         id: UUID = UUID(),
@@ -20,7 +21,8 @@ final class Memory {
         imageData: Data = Data(),
         isSharedWithPartner: Bool = false,
         isNewForPartner: Bool = false,
-        sharedBy: String = ""
+        sharedBy: String = "",
+        imageURL: String? = nil
     ) {
         self.id = id
         self.date = date
@@ -30,5 +32,6 @@ final class Memory {
         self.isSharedWithPartner = isSharedWithPartner
         self.isNewForPartner = isNewForPartner
         self.sharedBy = sharedBy
+        self.imageURL = imageURL
     }
 }

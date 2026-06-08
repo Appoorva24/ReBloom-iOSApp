@@ -4,6 +4,7 @@ import AVFoundation
 
 struct ExerciseDetailView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(SyncManager.self) private var syncManager
     @State private var vm = ExerciseDetailViewModel()
     let exercise: Exercise
 
@@ -32,7 +33,7 @@ struct ExerciseDetailView: View {
                             onStart: vm.startExercise,
                             onPause: vm.pauseExercise,
                             onResume: vm.resumeExercise,
-                            onEnd: { vm.endExerciseFully(exerciseName: exercise.name, modelContext: modelContext) }
+                            onEnd: { vm.endExerciseFully(exerciseName: exercise.name, modelContext: modelContext, syncManager: syncManager) }
                         )
                     } else {
                         BreathingSessionView(
@@ -41,7 +42,7 @@ struct ExerciseDetailView: View {
                             onStart: vm.startExercise,
                             onPause: vm.pauseExercise,
                             onResume: vm.resumeExercise,
-                            onEnd: { vm.endExerciseFully(exerciseName: exercise.name, modelContext: modelContext) }
+                            onEnd: { vm.endExerciseFully(exerciseName: exercise.name, modelContext: modelContext, syncManager: syncManager) }
                         )
                     }
                 }

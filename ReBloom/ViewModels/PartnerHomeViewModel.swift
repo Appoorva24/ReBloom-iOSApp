@@ -14,6 +14,8 @@ final class PartnerHomeViewModel {
     var showRecoverySheet = false
     var showHeartNotes = false
     var heartScore: Double = 0
+    var isLoading = false
+    var errorMessage: String?
 
     // MARK: - Computed
     var profile: UserProfile? { profiles.first }
@@ -77,11 +79,22 @@ final class PartnerHomeViewModel {
         load(modelContext: modelContext)
     }
 
-    func markNotesAsRead(modelContext: ModelContext) {
+    func markNotesAsRead(modelContext: ModelContext, syncManager: SyncManager? = nil) {
+        var noteIDs: [UUID] = []
         for note in motherNotes where !note.isRead {
             note.isRead = true
+            noteIDs.append(note.id)
         }
         try? modelContext.save()
+        
+        // Also update read status in Supabase
+        if let sync = syncManager {
+            Task {
+                for noteID in noteIDs {
+                    try? await sync.markNoteAsRead(noteID: noteID)
+                }
+            }
+        }
     }
 
     // MARK: - Mood Details

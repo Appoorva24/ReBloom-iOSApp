@@ -71,6 +71,7 @@ enum NavigationTarget: Hashable, Identifiable {
 
 struct HomeDashboardView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(SyncManager.self) private var syncManager
     @State private var vm = HomeDashboardViewModel()
 
     // UI-only animation state
@@ -539,7 +540,7 @@ struct HomeDashboardView: View {
                                 vm.selectedMood = emoji
                                 vm.moodTheme    = theme
                             }
-                            vm.saveMood(emoji, modelContext: modelContext)
+                            vm.saveMood(emoji, modelContext: modelContext, syncManager: syncManager)
                             showBurst = true
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { showBurst = false }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3)  { vm.showMoodPicker = false }

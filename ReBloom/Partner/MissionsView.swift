@@ -3,6 +3,7 @@ import SwiftData
 
 struct MissionsView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(SyncManager.self) private var syncManager
     @State private var vm = MissionsViewModel()
 
     @State private var appeared = true
@@ -127,7 +128,7 @@ struct MissionsView: View {
                     if !mission.isCompleted {
                         Button {
                             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                            vm.markComplete(mission, modelContext: modelContext)
+                            vm.markComplete(mission, modelContext: modelContext, syncManager: syncManager)
                         } label: {
                             Text("Mark Complete ✓")
                                 .font(.headline)

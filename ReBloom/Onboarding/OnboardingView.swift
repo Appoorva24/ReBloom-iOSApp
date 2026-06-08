@@ -110,7 +110,15 @@ struct OnboardingView: View {
     @State private var path: [Int]       = []
     @State private var animateGradient   = false
 
-    private let accentColor = Color.motherPrimary
+    private var isMother: Bool { vm.selectedRole == "wife" }
+    private var themePrimary: Color { isMother ? .motherPrimary : .partnerPrimary }
+    private var themeSecondary: Color { isMother ? .motherSecondary : .partnerSecondary }
+    private var themeDeep: Color { isMother ? .motherDeepRose : .partnerDeep }
+    private var themeBgTop: Color { isMother ? .motherBgTop : .partnerBgTop }
+    private var themeBgBottom: Color { isMother ? .motherBgBottom : .partnerBgBottom }
+    private var themeTextHeading: Color { isMother ? .motherTextHeading : .partnerNavy }
+    
+    private var accentColor: Color { themePrimary }
 
    
     var body: some View {
@@ -127,9 +135,11 @@ struct OnboardingView: View {
                     case 1: dualInterfaceStep
                     case 2: motherFeaturesStep
                     case 3: partnerFeaturesStep
-                    case 4: detailsFormStep
-                    case 5: connectPartnerStep
-                    case 6: enterAppStep
+                    case 4: roleSelectionStep
+                    case 5: authStep
+                    case 6: detailsFormStep
+                    case 7: connectPartnerStep
+                    case 8: enterAppStep
                     default: EmptyView()
                     }
                 }
@@ -138,7 +148,7 @@ struct OnboardingView: View {
                 .toolbar {
                     ToolbarItem(placement: .principal) {
                         HStack(spacing: 6) {
-                            ForEach(1..<7, id: \.self) { i in
+                            ForEach(1..<9, id: \.self) { i in
                                 Capsule()
                                     .fill(i <= step ? accentColor : Color.secondary.opacity(0.2))
                                     .frame(width: i == step ? 22 : 8, height: 8)
@@ -154,7 +164,7 @@ struct OnboardingView: View {
    
     private var backgroundView: some View {
         LinearGradient(
-            colors: [.motherBgTop, Color.motherPrimary.opacity(0.14), .motherBgBottom],
+            colors: [themeBgTop, themePrimary.opacity(0.14), themeBgBottom],
             startPoint: animateGradient ? .topLeading : .bottomLeading,
             endPoint:   animateGradient ? .bottomTrailing : .topTrailing
         )
@@ -501,6 +511,118 @@ struct OnboardingView: View {
     }
 
 
+    private var roleSelectionStep: some View {
+        VStack(spacing: 0) {
+            Spacer()
+            
+            Text("Who is using this app?")
+                .font(.title2.weight(.bold))
+                .fontDesign(.rounded)
+                .foregroundStyle(Color.motherTextHeading)
+                .padding(.bottom, 8)
+            
+            Text("This helps us personalise your experience.")
+                .font(.subheadline)
+                .fontDesign(.rounded)
+                .foregroundStyle(.secondary)
+                .padding(.bottom, 40)
+            
+            VStack(spacing: 16) {
+                Button {
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    vm.selectedRole = "wife"
+                    if authManager.isAuthenticated {
+                        path.append(6)
+                    } else {
+                        path.append(5)
+                    }
+                } label: {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.motherPrimary.opacity(0.15))
+                                .frame(width: 60, height: 60)
+                            Image(systemName: "figure.and.child.holdinghands")
+                                .font(.system(size: 26, weight: .medium))
+                                .foregroundStyle(Color.motherPrimary)
+                        }
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("I'm the Mother")
+                                .font(.headline).fontDesign(.rounded)
+                                .foregroundStyle(Color.motherTextHeading)
+                            Text("I am recovering postpartum")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundStyle(.secondary.opacity(0.5))
+                    }
+                    .padding(16)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    .shadow(color: Color.motherPrimary.opacity(0.1), radius: 8, x: 0, y: 4)
+                }
+                .buttonStyle(.plain)
+                
+                Button {
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    vm.selectedRole = "husband"
+                    if authManager.isAuthenticated {
+                        path.append(6)
+                    } else {
+                        path.append(5)
+                    }
+                } label: {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.partnerPrimary.opacity(0.15))
+                                .frame(width: 60, height: 60)
+                            Image(systemName: "person.fill.checkmark")
+                                .font(.system(size: 26, weight: .medium))
+                                .foregroundStyle(Color.partnerPrimary)
+                        }
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("I'm the Partner")
+                                .font(.headline).fontDesign(.rounded)
+                                .foregroundStyle(Color.motherTextHeading)
+                            Text("I am supporting her")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundStyle(.secondary.opacity(0.5))
+                    }
+                    .padding(16)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    .shadow(color: Color.partnerPrimary.opacity(0.1), radius: 8, x: 0, y: 4)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, 8)
+            
+            Spacer()
+        }
+        .padding(.horizontal, 24)
+    }
+
+    private var authStep: some View {
+        SignInView(isMother: isMother)
+            .onChange(of: authManager.isAuthenticated) { _, isAuth in
+                if isAuth {
+                    path.append(6)
+                }
+            }
+            .onAppear {
+                if authManager.isAuthenticated {
+                    path.append(6)
+                }
+            }
+    }
+
     private var detailsFormStep: some View {
         VStack(spacing: 0) {
             Spacer()
@@ -509,18 +631,18 @@ struct OnboardingView: View {
             VStack(spacing: 4) {
                 ZStack {
                     Circle()
-                        .fill(Color.motherPrimary.opacity(0.10))
+                        .fill(themePrimary.opacity(0.10))
                         .frame(width: 60, height: 60)
                     Image(systemName: "person.text.rectangle.fill")
                         .font(.system(size: 26, weight: .medium))
-                        .foregroundStyle(Color.motherPrimary)
+                        .foregroundStyle(themePrimary)
                 }
                 .padding(.bottom, 4)
 
                 Text("A little about you")
                     .font(.title2.weight(.bold))
                     .fontDesign(.rounded)
-                    .foregroundStyle(Color.motherTextHeading)
+                    .foregroundStyle(themeTextHeading)
                 Text("We'll use this to personalise your experience")
                     .font(.subheadline)
                     .fontDesign(.rounded)
@@ -555,7 +677,7 @@ struct OnboardingView: View {
                     HStack(spacing: 6) {
                         Image(systemName: "calendar")
                             .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(Color.motherPrimary.opacity(0.7))
+                            .foregroundStyle(themePrimary.opacity(0.7))
                         Text("Baby's birthday")
                             .font(.caption.weight(.semibold))
                             .fontDesign(.rounded)
@@ -564,14 +686,14 @@ struct OnboardingView: View {
                     Spacer()
                     DatePicker("", selection: $vm.babyBirthDate, displayedComponents: .date)
                         .datePickerStyle(.compact)
-                        .tint(Color.motherPrimary)
+                        .tint(themePrimary)
                         .labelsHidden()
                 }
                 .padding(.horizontal, 14)
                 .padding(.vertical, 12)
                 .background(Color.white.opacity(0.88))
                 .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                .shadow(color: Color.motherPrimary.opacity(0.07), radius: 6, x: 0, y: 2)
+                .shadow(color: themePrimary.opacity(0.07), radius: 6, x: 0, y: 2)
             }
 
             Spacer()
@@ -579,7 +701,13 @@ struct OnboardingView: View {
             if !vm.motherName.isEmpty {
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    path.append(5)
+                    vm.saveProfile(
+                        modelContext: modelContext,
+                        authManager: authManager,
+                        connectionManager: connectionManager
+                    ) {
+                        path.append(7)
+                    }
                 } label: {
                     HStack(spacing: 8) {
                         Text("Almost There")
@@ -591,11 +719,11 @@ struct OnboardingView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 17)
                     .background(LinearGradient(
-                        colors: [Color.motherPrimary, Color.motherSecondary],
+                        colors: [themePrimary, themeSecondary],
                         startPoint: .leading, endPoint: .trailing
                     ))
                     .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                    .shadow(color: Color.motherPrimary.opacity(0.32), radius: 12, x: 0, y: 6)
+                    .shadow(color: themePrimary.opacity(0.32), radius: 12, x: 0, y: 6)
                 }
                 .buttonStyle(.plain)
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
@@ -616,7 +744,7 @@ struct OnboardingView: View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(Color.motherPrimary.opacity(0.7))
+                .foregroundStyle(themePrimary.opacity(0.7))
                 .frame(width: 20)
 
             VStack(alignment: .leading, spacing: 2) {
@@ -627,17 +755,17 @@ struct OnboardingView: View {
                 TextField(placeholder, text: text)
                     .font(.body).fontDesign(.rounded)
                     .textFieldStyle(.plain)
-                    .tint(Color.motherPrimary)
+                    .tint(themePrimary)
             }
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
         .background(Color.white.opacity(0.88))
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .shadow(color: Color.motherPrimary.opacity(0.07), radius: 6, x: 0, y: 2)
+        .shadow(color: themePrimary.opacity(0.07), radius: 6, x: 0, y: 2)
         .overlay(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .stroke(text.wrappedValue.isEmpty ? Color.clear : Color.motherPrimary.opacity(0.28), lineWidth: 1.5)
+                .stroke(text.wrappedValue.isEmpty ? Color.clear : themePrimary.opacity(0.28), lineWidth: 1.5)
         )
     }
 
@@ -689,115 +817,126 @@ struct OnboardingView: View {
 
             Spacer().frame(height: 28)
 
-            // Your Code
-            VStack(spacing: 8) {
-                Text("YOUR CODE")
-                    .font(.caption.weight(.bold))
-                    .fontDesign(.rounded)
-                    .kerning(1.2)
-                    .foregroundStyle(Color.motherTextBody)
-
-                Text(connectionManager.inviteCode ?? "------")
-                    .font(.system(size: 32, weight: .bold, design: .monospaced))
-                    .kerning(6)
-                    .foregroundStyle(Color.partnerPrimary)
-
-                Button {
-                    UIPasteboard.general.string = connectionManager.inviteCode
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                } label: {
-                    HStack(spacing: 4) {
-                        Image(systemName: "doc.on.doc").font(.caption2)
-                        Text("Copy").font(.caption.weight(.semibold)).fontDesign(.rounded)
-                    }
-                    .foregroundStyle(Color.partnerPrimary)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 6)
-                    .background(Color.partnerPrimary.opacity(0.1))
-                    .clipShape(Capsule())
-                }
-                .buttonStyle(.plain)
-            }
-            .padding(16)
-            .frame(maxWidth: .infinity)
-            .background(Color.white.opacity(0.8))
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-
-            Spacer().frame(height: 16)
-
-            // Partner Code Input
-            VStack(spacing: 10) {
-                Text("PARTNER'S CODE")
-                    .font(.caption.weight(.bold))
-                    .fontDesign(.rounded)
-                    .kerning(1.2)
-                    .foregroundStyle(Color.motherTextBody)
-
-                TextField("Enter code", text: $vm.partnerInviteCode)
-                    .font(.system(size: 20, weight: .semibold, design: .monospaced))
-                    .kerning(4)
-                    .multilineTextAlignment(.center)
-                    .textInputAutocapitalization(.characters)
-                    .padding(12)
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-
-                if let error = vm.connectionError {
-                    Text(error)
-                        .font(.caption)
+            // Conditional UI based on Role
+            if vm.selectedRole == "wife" {
+                // Mother View: Show Code Only
+                VStack(spacing: 8) {
+                    Text("YOUR INVITE CODE")
+                        .font(.caption.weight(.bold))
                         .fontDesign(.rounded)
-                        .foregroundStyle(.red)
-                }
+                        .kerning(1.2)
+                        .foregroundStyle(Color.motherTextBody)
 
-                if !vm.partnerInviteCode.isEmpty {
+                    Text(connectionManager.inviteCode ?? "------")
+                        .font(.system(size: 32, weight: .bold, design: .monospaced))
+                        .kerning(6)
+                        .foregroundStyle(Color.partnerPrimary)
+
                     Button {
-                        Task {
-                            await vm.connectWithPartner(connectionManager: connectionManager)
+                        if let code = connectionManager.inviteCode {
+                            UIPasteboard.general.string = code
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         }
                     } label: {
-                        HStack(spacing: 6) {
-                            if vm.isConnecting {
-                                ProgressView().tint(.white)
-                            } else {
-                                Image(systemName: "heart.fill")
-                                Text("Connect")
-                            }
+                        HStack(spacing: 4) {
+                            Image(systemName: "doc.on.doc").font(.caption2)
+                            Text("Copy").font(.caption.weight(.semibold)).fontDesign(.rounded)
                         }
-                        .font(.subheadline.weight(.bold))
-                        .fontDesign(.rounded)
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(Color.partnerPrimary)
-                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .foregroundStyle(Color.partnerPrimary)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 6)
+                        .background(Color.partnerPrimary.opacity(0.1))
+                        .clipShape(Capsule())
                     }
                     .buttonStyle(.plain)
-                    .disabled(vm.partnerInviteCode.count < 6 || vm.isConnecting)
                 }
+                .padding(16)
+                .frame(maxWidth: .infinity)
+                .background(Color.white.opacity(0.8))
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                
+                Spacer().frame(height: 16)
+                
+                Text("Waiting for partner to connect...")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .padding(.bottom, 20)
+                
+            } else {
+                // Partner View: Input Code Only
+                VStack(spacing: 10) {
+                    Text("ENTER MOM'S CODE")
+                        .font(.caption.weight(.bold))
+                        .fontDesign(.rounded)
+                        .kerning(1.2)
+                        .foregroundStyle(themeTextHeading)
+
+                    TextField("Enter 6-digit code", text: $vm.partnerInviteCode)
+                        .font(.system(size: 20, weight: .semibold, design: .monospaced))
+                        .kerning(4)
+                        .multilineTextAlignment(.center)
+                        .textInputAutocapitalization(.characters)
+                        .padding(12)
+                        .background(Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+
+                    if let error = vm.connectionError {
+                        Text(error)
+                            .font(.caption)
+                            .fontDesign(.rounded)
+                            .foregroundStyle(.red)
+                    }
+
+                    if !vm.partnerInviteCode.isEmpty {
+                        Button {
+                            Task {
+                                await vm.connectWithPartner(connectionManager: connectionManager)
+                            }
+                        } label: {
+                            HStack(spacing: 6) {
+                                if vm.isConnecting {
+                                    ProgressView().tint(.white)
+                                } else {
+                                    Image(systemName: "heart.fill")
+                                    Text("Connect")
+                                }
+                            }
+                            .font(.subheadline.weight(.bold))
+                            .fontDesign(.rounded)
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(Color.partnerPrimary)
+                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(vm.partnerInviteCode.count < 6 || vm.isConnecting)
+                    }
+                }
+                .padding(16)
+                .frame(maxWidth: .infinity)
+                .background(Color.white.opacity(0.8))
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             }
-            .padding(16)
-            .frame(maxWidth: .infinity)
-            .background(Color.white.opacity(0.8))
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
             Spacer()
 
             // Skip / Continue button
             Button {
                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                path.append(6)
+                path.append(8)
             } label: {
-                Text(vm.partnerInviteCode.isEmpty ? "Skip for Now" : "Continue")
+                Text(vm.selectedRole == "wife" ? "Continue" : (vm.partnerInviteCode.isEmpty ? "Skip for Now" : "Continue"))
                     .font(.headline).fontDesign(.rounded)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 17)
                     .background(LinearGradient(
-                        colors: [Color.motherDeepRose, Color.motherPrimary],
+                        colors: [themeDeep, themePrimary],
                         startPoint: .leading, endPoint: .trailing
                     ))
                     .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                    .shadow(color: Color.motherPrimary.opacity(0.36), radius: 12, x: 0, y: 6)
+                    .shadow(color: themePrimary.opacity(0.36), radius: 12, x: 0, y: 6)
             }
             .buttonStyle(.plain)
 
@@ -816,7 +955,7 @@ struct OnboardingView: View {
        
                 Circle()
                     .fill(RadialGradient(
-                        colors: [Color.motherPrimary.opacity(0.15), Color.motherSecondary.opacity(0.08), Color.clear],
+                        colors: [themePrimary.opacity(0.15), themeSecondary.opacity(0.08), Color.clear],
                         center: .center, startRadius: 20, endRadius: 120
                     ))
                     .frame(width: 240, height: 240)
@@ -825,14 +964,14 @@ struct OnboardingView: View {
                 ZStack {
                     Circle()
                         .fill(LinearGradient(
-                            colors: [Color.motherPrimary.opacity(0.12), Color.motherSecondary.opacity(0.08)],
+                            colors: [themePrimary.opacity(0.12), themeSecondary.opacity(0.08)],
                             startPoint: .topLeading, endPoint: .bottomTrailing
                         ))
                         .frame(width: 100, height: 100)
                     Image(systemName: "sparkles")
                         .font(.system(size: 44, weight: .medium))
                         .foregroundStyle(LinearGradient(
-                            colors: [Color.motherDeepRose, Color.motherPrimary, Color.motherSecondary],
+                            colors: [themeDeep, themePrimary, themeSecondary],
                             startPoint: .topLeading, endPoint: .bottomTrailing
                         ))
                 }
@@ -844,7 +983,7 @@ struct OnboardingView: View {
                 Text("You're all set!")
                     .font(.largeTitle.weight(.bold))
                     .fontDesign(.rounded)
-                    .foregroundStyle(Color.motherTextHeading)
+                    .foregroundStyle(themeTextHeading)
 
                 Text("Your ReBloom journey begins now.\nHeal, connect, and grow — together.")
                     .font(.body.weight(.medium))
@@ -861,12 +1000,12 @@ struct OnboardingView: View {
                 disclaimerRow(
                     icon: "stethoscope",
                     text: "Always consult your healthcare provider for medical concerns.",
-                    color: Color.motherPrimary
+                    color: themePrimary
                 )
                 disclaimerRow(
                     icon: "leaf.fill",
                     text: "ReBloom is a wellness companion — it does not replace professional care.",
-                    color: Color.motherPrimary
+                    color: themePrimary
                 )
             }
 
@@ -874,13 +1013,7 @@ struct OnboardingView: View {
 
             Button {
                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                vm.saveProfile(
-                    modelContext: modelContext,
-                    authManager: authManager,
-                    connectionManager: connectionManager
-                ) {
-                    onboardingDone = true
-                }
+                onboardingDone = true
             } label: {
                 HStack(spacing: 8) {
                     Text("Begin My Journey")
@@ -892,11 +1025,11 @@ struct OnboardingView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 17)
                 .background(LinearGradient(
-                    colors: [Color.motherDeepRose, Color.motherPrimary],
+                    colors: [themeDeep, themePrimary],
                     startPoint: .leading, endPoint: .trailing
                 ))
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .shadow(color: Color.motherPrimary.opacity(0.36), radius: 12, x: 0, y: 6)
+                .shadow(color: themePrimary.opacity(0.36), radius: 12, x: 0, y: 6)
             }
             .buttonStyle(.plain)
 

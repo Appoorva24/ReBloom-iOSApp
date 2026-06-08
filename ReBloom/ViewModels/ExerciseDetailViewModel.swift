@@ -12,6 +12,8 @@ final class ExerciseDetailViewModel {
     var timer: Timer?
     var showDurationSheet = false
     var selectedDuration: Int?
+    var isLoading = false
+    var errorMessage: String?
 
     // MARK: - Computed
     var profile: UserProfile? { profiles.first }
@@ -55,19 +57,28 @@ final class ExerciseDetailViewModel {
         withAnimation(.spring(duration: 0.35, bounce: 0.4)) { exerciseState = .completed }
     }
 
-    func logExercise(exerciseName: String, modelContext: ModelContext) {
+    func logExercise(exerciseName: String, modelContext: ModelContext, syncManager: SyncManager) {
         let log = ExerciseLog(
             exerciseName: exerciseName,
-            weekNumber: profile?.weeksPostpartum ?? 1,
-            completed: true
+            durationSeconds: seconds,
+            weekNumber: profile?.weeksPostpartum ?? 1
         )
         modelContext.insert(log)
         try? modelContext.save()
+        
+        // Sync to Supabase
+        Task {
+            do {
+                try await syncManager.syncExerciseLogs(modelContext: modelContext)
+            } catch {
+                print("[ExerciseDetail] Sync failed: \(error)")
+            }
+        }
     }
 
-    func endExerciseFully(exerciseName: String, modelContext: ModelContext) {
+    func endExerciseFully(exerciseName: String, modelContext: ModelContext, syncManager: SyncManager) {
         timer?.invalidate(); timer = nil
-        logExercise(exerciseName: exerciseName, modelContext: modelContext)
+        logExercise(exerciseName: exerciseName, modelContext: modelContext, syncManager: syncManager)
         withAnimation(.spring(duration: 0.35, bounce: 0.4)) {
             exerciseState = .notStarted
             seconds = 0

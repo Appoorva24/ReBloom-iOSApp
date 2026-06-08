@@ -20,6 +20,8 @@ final class HomeDashboardViewModel {
     var heartScore: Double = 0
     var affirmationIndex = 0
     var activeNavTarget: NavigationTarget? = nil
+    var isLoading = false
+    var errorMessage: String?
 
     // MARK: - Computed
     var profile: UserProfile? { profiles.first }
@@ -74,7 +76,7 @@ final class HomeDashboardViewModel {
     }
 
     // MARK: - Actions
-    func saveMood(_ emoji: String, modelContext: ModelContext, syncManager: SyncManager? = nil) {
+    func saveMood(_ emoji: String, modelContext: ModelContext, syncManager: SyncManager) {
         let log = MoodLog(mood: emoji, energyLevel: moodEnergy(emoji))
         modelContext.insert(log)
         try? modelContext.save()
@@ -84,9 +86,13 @@ final class HomeDashboardViewModel {
         // Reload data after save
         load(modelContext: modelContext)
         
-        // TODO: Queue Supabase sync
-        if let sync = syncManager {
-            Task { try? await sync.syncMoodLogs(modelContext: modelContext) }
+        // Always sync to Supabase
+        Task {
+            do {
+                try await syncManager.syncMoodLogs(modelContext: modelContext)
+            } catch {
+                print("[Dashboard] Mood sync failed: \(error)")
+            }
         }
     }
 

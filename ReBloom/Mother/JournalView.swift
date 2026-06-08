@@ -4,6 +4,7 @@ import SwiftData
 struct JournalView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Environment(SyncManager.self) private var syncManager
     @State private var vm = JournalViewModel()
     
     @State private var journalRecorder = VoiceRecorderManager()
@@ -183,7 +184,7 @@ struct JournalView: View {
                 VStack(spacing: 12) {
                     
                     Button {
-                        vm.saveToJournal(modelContext: modelContext)
+                        vm.saveToJournal(modelContext: modelContext, syncManager: syncManager)
                         isTextFieldFocused = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                             withAnimation { vm.showToast = false }
@@ -215,7 +216,7 @@ struct JournalView: View {
                     
                     
                     Button {
-                        vm.shareWithPartner(modelContext: modelContext)
+                        vm.shareWithPartner(modelContext: modelContext, syncManager: syncManager)
                         isTextFieldFocused = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                             withAnimation { vm.showToast = false }
@@ -276,13 +277,13 @@ struct JournalView: View {
                         recorder: journalRecorder,
                         tintColor: Color.motherLavender,
                         onSaveVoice: { data in
-                            vm.saveVoiceToJournal(data, modelContext: modelContext)
+                            vm.saveVoiceToJournal(data, modelContext: modelContext, syncManager: syncManager)
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                                 withAnimation { vm.showToast = false }
                             }
                         },
                         onSendVoice: { data in
-                            vm.sendVoiceMessage(data, modelContext: modelContext)
+                            vm.sendVoiceMessage(data, modelContext: modelContext, syncManager: syncManager)
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                                 withAnimation { vm.showToast = false }
                             }

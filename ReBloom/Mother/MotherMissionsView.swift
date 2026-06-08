@@ -4,6 +4,7 @@ import AVFoundation
 
 struct MotherMissionsView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(SyncManager.self) private var syncManager
     @State private var vm = MotherMissionsViewModel()
 
     @State private var missionRecorder = VoiceRecorderManager()
@@ -35,7 +36,7 @@ struct MotherMissionsView: View {
                             ForEach(vm.missionChips, id: \.label) { chip in
                                 Button {
                                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                                    vm.sendMission(title: chip.label, modelContext: modelContext)
+                                    vm.sendMission(title: chip.label, modelContext: modelContext, syncManager: syncManager)
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                                         withAnimation { vm.showToast = false }
                                     }
@@ -97,7 +98,7 @@ struct MotherMissionsView: View {
 
                             Button {
                                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                                vm.sendMission(title: vm.customMission, modelContext: modelContext)
+                                vm.sendMission(title: vm.customMission, modelContext: modelContext, syncManager: syncManager)
                                 vm.customMission = ""
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                                     withAnimation { vm.showToast = false }
@@ -133,7 +134,7 @@ struct MotherMissionsView: View {
                             }
 
                             VoiceMessageView(recorder: missionRecorder, tintColor: Color.motherRose, onSaveVoice: nil, onSendVoice: { data in
-                                vm.sendVoiceMission(data: data, modelContext: modelContext)
+                                vm.sendVoiceMission(data: data, modelContext: modelContext, syncManager: syncManager)
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                                     withAnimation { vm.showToast = false }
                                 }

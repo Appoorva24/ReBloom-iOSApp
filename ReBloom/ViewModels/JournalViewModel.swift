@@ -13,6 +13,8 @@ final class JournalViewModel {
     var toastMessage = ""
     var entryToDelete: MoodLog?
     var showDeleteConfirmation = false
+    var isLoading = false
+    var errorMessage: String?
 
     // MARK: - Computed
     var profile: UserProfile? { profiles.first }
@@ -29,7 +31,7 @@ final class JournalViewModel {
     }
 
     // MARK: - Actions
-    func saveToJournal(modelContext: ModelContext) {
+    func saveToJournal(modelContext: ModelContext, syncManager: SyncManager) {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
 
         let log = MoodLog(
@@ -48,9 +50,18 @@ final class JournalViewModel {
 
         entryText = ""
         load(modelContext: modelContext)
+        
+        // Always sync to Supabase
+        Task {
+            do {
+                try await syncManager.syncMoodLogs(modelContext: modelContext)
+            } catch {
+                print("[Journal] Journal sync failed: \(error)")
+            }
+        }
     }
 
-    func shareWithPartner(modelContext: ModelContext, syncManager: SyncManager? = nil) {
+    func shareWithPartner(modelContext: ModelContext, syncManager: SyncManager) {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
 
         let note = LoveNote(
@@ -69,13 +80,17 @@ final class JournalViewModel {
 
         entryText = ""
         
-        // TODO: Queue Supabase sync
-        if let sync = syncManager {
-            Task { try? await sync.syncLoveNotes(modelContext: modelContext) }
+        // Always sync to Supabase
+        Task {
+            do {
+                try await syncManager.syncLoveNotes(modelContext: modelContext)
+            } catch {
+                print("[Journal] Love note sync failed: \(error)")
+            }
         }
     }
 
-    func sendVoiceMessage(_ data: Data, modelContext: ModelContext, syncManager: SyncManager? = nil) {
+    func sendVoiceMessage(_ data: Data, modelContext: ModelContext, syncManager: SyncManager) {
         let encoded = "[VOICE:\(data.base64EncodedString())]"
         let note = LoveNote(
             id: UUID(),
@@ -91,12 +106,17 @@ final class JournalViewModel {
         toastMessage = "Voice note sent to \(partnerName)!"
         showToast = true
         
-        if let sync = syncManager {
-            Task { try? await sync.syncLoveNotes(modelContext: modelContext) }
+        // Always sync to Supabase
+        Task {
+            do {
+                try await syncManager.syncLoveNotes(modelContext: modelContext)
+            } catch {
+                print("[Journal] Voice note sync failed: \(error)")
+            }
         }
     }
 
-    func saveVoiceToJournal(_ data: Data, modelContext: ModelContext) {
+    func saveVoiceToJournal(_ data: Data, modelContext: ModelContext, syncManager: SyncManager) {
         let encoded = "[VOICE:\(data.base64EncodedString())]"
         let log = MoodLog(
             id: UUID(),
@@ -112,6 +132,15 @@ final class JournalViewModel {
         toastMessage = "Voice note saved to journal 🌸"
         showToast = true
         load(modelContext: modelContext)
+        
+        // Always sync to Supabase
+        Task {
+            do {
+                try await syncManager.syncMoodLogs(modelContext: modelContext)
+            } catch {
+                print("[Journal] Voice journal sync failed: \(error)")
+            }
+        }
     }
 
     func deleteEntry(_ entry: MoodLog, modelContext: ModelContext) {

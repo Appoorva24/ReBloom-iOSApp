@@ -5,6 +5,7 @@ import PhotosUI
 
 struct PartnerMemoriesView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(SyncManager.self) private var syncManager
     @State private var vm = PartnerMemoriesViewModel()
 
     @State private var appeared        = true
@@ -55,7 +56,7 @@ struct PartnerMemoriesView: View {
             }
             .sheet(isPresented: $vm.showAddSheet) {
                 PartnerAddMemorySheet(partnerName: vm.profile?.partnerName ?? "Mom") { memory in
-                    vm.saveMemory(memory, modelContext: modelContext)
+                    vm.saveMemory(memory, modelContext: modelContext, syncManager: syncManager)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { vm.showToast = false }
                 }
             }

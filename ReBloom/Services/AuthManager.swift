@@ -1,81 +1,101 @@
 import SwiftUI
-import AuthenticationServices
+import Supabase
 
 @Observable
 final class AuthManager {
     // MARK: - State
     var isAuthenticated = false
-    var currentUserID: String?
-    var appleUserIdentifier: String?
-    var userName: String?
+    var currentSupabaseUserID: String?
     var authError: String?
+    var isCheckingAuth = false
+    var isLoading = false
     
-    private let keychainAppleIDKey = "rebloom_apple_user_id"
+    private let client = SupabaseManager.client
     
     // MARK: - Check Auth on Launch
     func checkAuthStatus() async {
-        // Check if we have stored Apple ID
-        if let storedAppleID = KeychainHelper.loadString(forKey: keychainAppleIDKey) {
-            appleUserIdentifier = storedAppleID
+        await MainActor.run { isCheckingAuth = true }
+        
+        do {
+            let session = try await client.auth.session
+            await MainActor.run {
+                self.currentSupabaseUserID = session.user.id.uuidString
+                self.isAuthenticated = true
+                self.isCheckingAuth = false
+            }
+        } catch {
+            await MainActor.run {
+                self.isCheckingAuth = false
+                self.isAuthenticated = false
+            }
+            print("[Auth] No active session: \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - Email Sign In
+    func signIn(email: String, password: String) async {
+        await MainActor.run { 
+            self.isLoading = true
+            self.authError = nil
+        }
+        
+        do {
+            let session = try await client.auth.signIn(
+                email: email,
+                password: password
+            )
             
-            // Verify the credential is still valid
-            let provider = ASAuthorizationAppleIDProvider()
-            do {
-                let state = try await provider.credentialState(forUserID: storedAppleID)
-                switch state {
-                case .authorized:
-                    isAuthenticated = true
-                    currentUserID = storedAppleID
-                case .revoked, .notFound:
-                    signOut()
-                default:
-                    signOut()
-                }
-            } catch {
-                // Offline — trust stored credential
-                isAuthenticated = true
-                currentUserID = storedAppleID
+            await MainActor.run {
+                self.currentSupabaseUserID = session.user.id.uuidString
+                self.isAuthenticated = true
+                self.isLoading = false
+            }
+        } catch {
+            await MainActor.run {
+                self.authError = error.localizedDescription
+                self.isLoading = false
             }
         }
     }
     
-    // MARK: - Sign In with Apple
-    func handleSignInResult(_ result: Result<ASAuthorization, Error>) {
-        switch result {
-        case .success(let auth):
-            guard let credential = auth.credential as? ASAuthorizationAppleIDCredential else {
-                authError = "Invalid credential type"
-                return
+    // MARK: - Email Sign Up
+    func signUp(email: String, password: String) async {
+        await MainActor.run { 
+            self.isLoading = true
+            self.authError = nil
+        }
+        
+        do {
+            let response = try await client.auth.signUp(
+                email: email,
+                password: password
+            )
+            
+            await MainActor.run {
+                self.currentSupabaseUserID = response.user.id.uuidString
+                self.isAuthenticated = true
+                self.isLoading = false
             }
-            
-            let userID = credential.user
-            appleUserIdentifier = userID
-            currentUserID = userID
-            KeychainHelper.saveString(userID, forKey: keychainAppleIDKey)
-            
-            // Extract name if available (only on first sign-in)
-            if let fullName = credential.fullName {
-                let name = [fullName.givenName, fullName.familyName]
-                    .compactMap { $0 }
-                    .joined(separator: " ")
-                if !name.isEmpty {
-                    userName = name
-                }
+        } catch {
+            await MainActor.run {
+                self.authError = error.localizedDescription
+                self.isLoading = false
             }
-            
-            isAuthenticated = true
-            
-        case .failure(let error):
-            authError = error.localizedDescription
         }
     }
     
     // MARK: - Sign Out
     func signOut() {
+        Task {
+            do {
+                try await client.auth.signOut()
+            } catch {
+                print("[Auth] Supabase sign-out error: \(error.localizedDescription)")
+            }
+        }
+        
         isAuthenticated = false
-        currentUserID = nil
-        appleUserIdentifier = nil
-        userName = nil
-        KeychainHelper.delete(key: keychainAppleIDKey)
+        currentSupabaseUserID = nil
+        authError = nil
     }
 }
